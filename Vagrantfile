@@ -23,6 +23,13 @@ Vagrant::Config.run do |config|
     # any other machines on the same network, but cannot be accessed (through this
     # network interface) by any external networks.
     config.vm.network :hostonly, "33.33.33.10"
+
+    base.vm.provision :puppet do |puppet|
+      puppet.manifests_path = "puppet/manifests"
+      puppet.manifest_file = "base.pp"
+      puppet.module_path = "puppet/modules"
+      puppet.options = "--verbose --debug"
+    end
   end
 
   # Assign this VM to a bridged network, allowing you to connect directly to a
@@ -57,8 +64,4 @@ Vagrant::Config.run do |config|
   # #               Managed by Puppet.\n"
   # # }
   #
-  # config.vm.provision :puppet do |puppet|
-  #   puppet.manifests_path = "manifests"
-  #   puppet.manifest_file  = "base.pp"
-  # end
 end
